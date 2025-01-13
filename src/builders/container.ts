@@ -13,7 +13,7 @@ const getInitialProperties = (): Properties => ({
     children: {},
 })
 
-class ContainerBuilder<Props extends Properties = Properties, Value = GetComponentPropertiesSchema<Props['children']>> extends GeneralOptionBuilder<
+export class ContainerBuilder<Props extends Properties = Properties, Value = GetComponentPropertiesSchema<Props['children']>> extends GeneralOptionBuilder<
     Value,
     Properties
 > {

@@ -20,7 +20,7 @@ const getInitialProperties = (): Properties => ({
     helpText: undefined,
 })
 
-class CheckboxBuilder<Value = Properties['checked']> extends GeneralOptionBuilder<Value, Properties> {
+export class CheckboxBuilder<Value = Properties['checked']> extends GeneralOptionBuilder<Value, Properties> {
     constructor() {
         super({ type: 'checkbox', properties: getInitialProperties() })
     }

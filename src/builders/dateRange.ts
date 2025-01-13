@@ -30,7 +30,7 @@ const getInitialProperties: () => Properties = () => ({
     helpText: undefined,
 })
 
-class DateRangeBuilder<Value = Properties['default']> extends GeneralOptionBuilder<Value, Properties> {
+export class DateRangeBuilder<Value = Properties['default']> extends GeneralOptionBuilder<Value, Properties> {
     constructor() {
         super({ type: 'dateRange', properties: getInitialProperties() })
     }

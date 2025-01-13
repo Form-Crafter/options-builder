@@ -1,5 +1,3 @@
-import cloneDeep from 'lodash.clonedeep'
-
 import { RelationRule } from '_relations'
 import { ValidationRule } from '_validations'
 
@@ -20,7 +18,7 @@ export class GeneralOptionBuilder<Output = any, Props extends object = object> {
 
     constructor({ type, properties }: GeneralOptionBuilderParams<Props>) {
         this.type = type
-        this.properties = cloneDeep(properties)
+        this.properties = properties
         this.validations = []
         this.relations = []
     }

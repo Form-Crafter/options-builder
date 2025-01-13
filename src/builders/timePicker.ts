@@ -1,5 +1,4 @@
 import { SelectionOption } from '@form-crafter/core'
-import cloneDeep from 'lodash.clonedeep'
 
 import { getTimeByHoursOptions } from '_utils'
 import { CustomValidationRuleParams } from '_validations'
@@ -34,7 +33,7 @@ const getInitialProperties: () => Properties = () => ({
     helpText: undefined,
 })
 
-class TimePickerBuilder<Value = Properties['default']> extends GeneralOptionBuilder<Value, Properties> {
+export class TimePickerBuilder<Value = Properties['default']> extends GeneralOptionBuilder<Value, Properties> {
     constructor() {
         super({ type: 'timePicker', properties: getInitialProperties() })
     }
@@ -60,7 +59,7 @@ class TimePickerBuilder<Value = Properties['default']> extends GeneralOptionBuil
     }
 
     public options(value: Properties['options']) {
-        this.properties.options = cloneDeep(value)
+        this.properties.options = value
         return this
     }
 

@@ -26,7 +26,7 @@ const getInitialProperties: () => Properties = () => ({
     helpText: undefined,
 })
 
-class NumberBuilder<Value = Properties['default']> extends GeneralOptionBuilder<Value, Properties> {
+export class NumberBuilder<Value = Properties['default']> extends GeneralOptionBuilder<Value, Properties> {
     constructor() {
         super({ type: 'number', properties: getInitialProperties() })
     }

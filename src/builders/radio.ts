@@ -1,5 +1,4 @@
 import { SelectionOption } from '@form-crafter/core'
-import cloneDeep from 'lodash.clonedeep'
 
 import { CustomValidationRuleParams } from '_validations'
 
@@ -25,7 +24,7 @@ const getInitialProperties = (): Properties => ({
     helpText: undefined,
 })
 
-class RadioBuilder<Value = Properties['default']> extends GeneralOptionBuilder<Value, Properties> {
+export class RadioBuilder<Value = Properties['default']> extends GeneralOptionBuilder<Value, Properties> {
     constructor() {
         super({ type: 'radio', properties: getInitialProperties() })
     }
@@ -41,7 +40,7 @@ class RadioBuilder<Value = Properties['default']> extends GeneralOptionBuilder<V
     }
 
     public options(value: Properties['options']) {
-        this.properties.options = cloneDeep(value)
+        this.properties.options = value
         return this
     }
 

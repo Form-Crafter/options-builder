@@ -26,7 +26,7 @@ const getInitialProperties: () => Properties = () => ({
     helpText: undefined,
 })
 
-class MaskBuilder<Value = Properties['default']> extends GeneralOptionBuilder<Value, Properties> {
+export class MaskBuilder<Value = Properties['default']> extends GeneralOptionBuilder<Value, Properties> {
     constructor() {
         super({ type: 'mask', properties: getInitialProperties() })
     }

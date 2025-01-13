@@ -28,7 +28,7 @@ const getInitialProperties: () => Properties = () => ({
     helpText: undefined,
 })
 
-class DateBuilder<Value = Properties['default']> extends GeneralOptionBuilder<Value, Properties> {
+export class DateBuilder<Value = Properties['default']> extends GeneralOptionBuilder<Value, Properties> {
     constructor() {
         super({ type: 'date', properties: getInitialProperties() })
     }

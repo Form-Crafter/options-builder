@@ -1,5 +1,4 @@
 import { SelectionOption } from '@form-crafter/core'
-import cloneDeep from 'lodash.clonedeep'
 
 import { CustomValidationRuleParams } from '_validations'
 
@@ -27,7 +26,7 @@ const getInitialProperties: () => Properties = () => ({
     helpText: undefined,
 })
 
-class MultiSelectBuilder<Value = Properties['default']> extends GeneralOptionBuilder<Value, Properties> {
+export class MultiSelectBuilder<Value = Properties['default']> extends GeneralOptionBuilder<Value, Properties> {
     constructor() {
         super({ type: 'multiSelect', properties: getInitialProperties() })
     }
@@ -43,7 +42,7 @@ class MultiSelectBuilder<Value = Properties['default']> extends GeneralOptionBui
     }
 
     public options(value: Properties['options']) {
-        this.properties.options = cloneDeep(value)
+        this.properties.options = value
         return this
     }
 

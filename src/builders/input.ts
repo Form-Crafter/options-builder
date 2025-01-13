@@ -22,7 +22,7 @@ const getInitialProperties: () => Properties = () => ({
     helpText: undefined,
 })
 
-class InputBuilder<Value = Properties['default']> extends GeneralOptionBuilder<Value, Properties> {
+export class InputBuilder<Value = Properties['default']> extends GeneralOptionBuilder<Value, Properties> {
     constructor() {
         super({ type: 'input', properties: getInitialProperties() })
     }

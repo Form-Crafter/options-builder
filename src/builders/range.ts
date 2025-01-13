@@ -25,7 +25,7 @@ const getInitialProperties: () => Properties = () => ({
     helpText: undefined,
 })
 
-class RangeBuilder<Value = Properties['default']> extends GeneralOptionBuilder<Value, Properties> {
+export class RangeBuilder<Value = Properties['default']> extends GeneralOptionBuilder<Value, Properties> {
     constructor() {
         super({ type: 'range', properties: getInitialProperties() })
     }

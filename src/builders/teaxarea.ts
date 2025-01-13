@@ -22,7 +22,7 @@ const getInitialProperties: () => Properties = () => ({
     helpText: undefined,
 })
 
-class TextareaBuilder<Value = Properties['default']> extends GeneralOptionBuilder<Value, Properties> {
+export class TextareaBuilder<Value = Properties['default']> extends GeneralOptionBuilder<Value, Properties> {
     constructor() {
         super({ type: 'textarea', properties: getInitialProperties() })
     }
