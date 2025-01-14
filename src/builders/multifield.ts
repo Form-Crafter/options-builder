@@ -1,11 +1,10 @@
 import { GetComponentPropertiesSchema } from '@form-crafter/core'
-import { NonUndefinableKey } from '@form-crafter/utils'
 
 import { CustomValidationRuleParams, LengthValidationRuleParams } from '_validations'
 
 import { BuilderSchema, GeneralOptionBuilder } from './general'
 
-type Properties<T extends BuilderSchema = {}> = {
+type Properties<T extends BuilderSchema = BuilderSchema> = {
     label: string | undefined
     default: GetComponentPropertiesSchema<T>[] | undefined
     template: T
@@ -21,27 +20,27 @@ const getInitialProperties: () => Properties = () => ({
     addButtonName: 'Add',
 })
 
-export class MultifieldBuilder<Value extends BuilderSchema = Properties['template'], Props extends Properties = Properties<Value>> extends GeneralOptionBuilder<
-    Props['default'],
-    Properties
-> {
+export class MultifieldBuilder<
+    Template extends BuilderSchema = BuilderSchema,
+    Value extends Properties['default'] = Properties<Template>['default'],
+> extends GeneralOptionBuilder<Value, Properties> {
     constructor() {
         super({ type: 'multifield', properties: getInitialProperties() })
     }
 
-    public label(value: Props['label']) {
+    public label(value: Properties['label']) {
         this.properties.label = value
         return this
     }
 
-    public default(value: Props['default']) {
+    public default(value: Value) {
         this.properties.default = value
         return this
     }
 
     public template<T extends BuilderSchema>(value: T) {
         this.properties.template = value
-        return this as unknown as MultifieldBuilder<T, Props>
+        return this as unknown as MultifieldBuilder<T>
     }
 
     public disable() {
@@ -56,7 +55,7 @@ export class MultifieldBuilder<Value extends BuilderSchema = Properties['templat
 
     public required() {
         this.validations.push({ name: 'required' })
-        return this as unknown as MultifieldBuilder<Props['template'], NonUndefinableKey<Props, 'default'>>
+        return this as unknown as MultifieldBuilder<Template, Exclude<Value, undefined>>
     }
 
     public length(params: LengthValidationRuleParams) {
@@ -64,7 +63,7 @@ export class MultifieldBuilder<Value extends BuilderSchema = Properties['templat
         return this
     }
 
-    public unique(params: { uniquekey: keyof GetComponentPropertiesSchema<Props['template']> }) {
+    public unique(params: { uniquekey: keyof Template }) {
         this.validations.push({ name: 'unique', params })
         return this
     }
