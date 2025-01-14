@@ -62,7 +62,7 @@ export class CheckboxBuilder<Value = Properties['checked']> extends GeneralOptio
 
     public required() {
         this.validations.push({ name: 'required' })
-        return this as GeneralOptionBuilder<Value, Properties>
+        return this as CheckboxBuilder<Exclude<Value, undefined>>
     }
 
     public hideIf() {

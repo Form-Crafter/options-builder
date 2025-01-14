@@ -71,7 +71,7 @@ export class RadioBuilder<Value = Properties['default']> extends GeneralOptionBu
 
     public required() {
         this.validations.push({ name: 'required' })
-        return this as GeneralOptionBuilder<Value, Properties>
+        return this as RadioBuilder<Exclude<Value, undefined>>
     }
 
     public hideIf() {

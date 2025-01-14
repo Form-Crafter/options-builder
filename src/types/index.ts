@@ -8,7 +8,7 @@ export type OptionFieldType =
     | 'checkbox'
     | 'multiCheckbox'
     | 'radio'
-    | 'range'
+    | 'slider'
     | 'datePicker'
     | 'dateRange'
     | 'timePicker'

@@ -20,8 +20,6 @@ const getInitialProperties: () => Properties = () => ({
     addButtonName: 'Add',
 })
 
-type PropsWithRequired<Props extends Properties> = Omit<Props, 'default'> & { default: NonNullable<Props['default']> }
-
 export class MultifieldBuilder<Props extends Properties = Properties> extends GeneralOptionBuilder<Props['default'], Properties> {
     constructor() {
         super({ type: 'multifield', properties: getInitialProperties() })
@@ -54,7 +52,7 @@ export class MultifieldBuilder<Props extends Properties = Properties> extends Ge
 
     public required() {
         this.validations.push({ name: 'required' })
-        return this as unknown as MultifieldBuilder<PropsWithRequired<Props>>
+        return this as unknown as MultifieldBuilder<Omit<Props, 'default'> & { default: Exclude<Props['default'], undefined> }>
     }
 
     public length(params: LengthValidationRuleParams) {

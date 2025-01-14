@@ -10,9 +10,9 @@ import { multifield } from '_builders/multifield'
 import { multiSelect } from '_builders/multiSelect'
 import { number } from '_builders/number'
 import { radio } from '_builders/radio'
-import { range } from '_builders/range'
 import { select } from '_builders/select'
-import { textarea } from '_builders/teaxarea'
+import { slider } from '_builders/slider'
+import { textarea } from '_builders/textarea'
 import { time } from '_builders/time'
 import { timePicker } from '_builders/timePicker'
 
@@ -30,7 +30,7 @@ export const builders = {
     checkbox,
     miltiCheckbox,
     radio,
-    range,
+    slider,
     datePicker,
     dateRange,
     timePicker,

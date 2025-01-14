@@ -71,7 +71,7 @@ export class MultiCheckboxBuilder<Value = Properties['checked']> extends General
 
     public required() {
         this.validations.push({ name: 'required' })
-        return this as GeneralOptionBuilder<Value, Properties>
+        return this as MultiCheckboxBuilder<Exclude<Value, undefined>>
     }
 
     public minSelections(min: number) {

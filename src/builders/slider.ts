@@ -25,9 +25,9 @@ const getInitialProperties: () => Properties = () => ({
     helpText: undefined,
 })
 
-export class RangeBuilder<Value = Properties['default']> extends GeneralOptionBuilder<Value, Properties> {
+export class SliderBuilder<Value = Properties['default']> extends GeneralOptionBuilder<Value, Properties> {
     constructor() {
-        super({ type: 'range', properties: getInitialProperties() })
+        super({ type: 'slider', properties: getInitialProperties() })
     }
 
     public label(value: Properties['label']) {
@@ -86,4 +86,4 @@ export class RangeBuilder<Value = Properties['default']> extends GeneralOptionBu
     }
 }
 
-export const range = () => new RangeBuilder()
+export const slider = () => new SliderBuilder()
