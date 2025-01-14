@@ -28,8 +28,8 @@
     "vite-plugin-dts": "^4.5.0"
   },
   "dependencies": {
-    "@form-crafter/core": "^0.0.4",
-    "@form-crafter/utils": "^0.0.2",
+    "@form-crafter/core": "^0.0.6",
+    "@form-crafter/utils": "^0.0.4",
     "lodash.clonedeep": "^4.5.0"
   },
   "prettier": "@form-crafter/dev-configs/dist/prettier.json"

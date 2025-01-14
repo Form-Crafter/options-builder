@@ -1,4 +1,5 @@
 import { GetComponentPropertiesSchema } from '@form-crafter/core'
+import { NonUndefinableKey } from '@form-crafter/utils'
 
 import { CustomValidationRuleParams, LengthValidationRuleParams } from '_validations'
 
@@ -20,7 +21,10 @@ const getInitialProperties: () => Properties = () => ({
     addButtonName: 'Add',
 })
 
-export class MultifieldBuilder<Props extends Properties = Properties> extends GeneralOptionBuilder<Props['default'], Properties> {
+export class MultifieldBuilder<Value extends BuilderSchema = Properties['template'], Props extends Properties = Properties<Value>> extends GeneralOptionBuilder<
+    Props['default'],
+    Properties
+> {
     constructor() {
         super({ type: 'multifield', properties: getInitialProperties() })
     }
@@ -37,7 +41,7 @@ export class MultifieldBuilder<Props extends Properties = Properties> extends Ge
 
     public template<T extends BuilderSchema>(value: T) {
         this.properties.template = value
-        return this as unknown as MultifieldBuilder<Properties<T>>
+        return this as unknown as MultifieldBuilder<T, Props>
     }
 
     public disable() {
@@ -52,7 +56,7 @@ export class MultifieldBuilder<Props extends Properties = Properties> extends Ge
 
     public required() {
         this.validations.push({ name: 'required' })
-        return this as unknown as MultifieldBuilder<Omit<Props, 'default'> & { default: Exclude<Props['default'], undefined> }>
+        return this as unknown as MultifieldBuilder<Props['template'], NonUndefinableKey<Props, 'default'>>
     }
 
     public length(params: LengthValidationRuleParams) {
