@@ -1,17 +1,18 @@
 import { SelectionOption } from '@form-crafter/core'
+import { NonUndefinable, Nullable, Undefinable } from '@form-crafter/utils'
 
 import { CustomValidationRuleParams } from '_validations'
 
 import { GeneralOptionBuilder } from './general'
 
 type Properties = {
-    label: string | undefined
-    checked: SelectionOption['value'][] | undefined
+    label: Undefinable<string>
+    checked: Undefinable<SelectionOption['value'][]>
     options: SelectionOption[]
-    disable: boolean | undefined
-    nullable: boolean | undefined
-    readonly: boolean | undefined
-    helpText: string | undefined
+    disable: Undefinable<boolean>
+    nullable: Undefinable<boolean>
+    readonly: Undefinable<boolean>
+    helpText: Undefinable<string>
 }
 
 const getInitialProperties = (): Properties => ({
@@ -24,7 +25,7 @@ const getInitialProperties = (): Properties => ({
     helpText: undefined,
 })
 
-export class MultiCheckboxBuilder<Value = Properties['checked']> extends GeneralOptionBuilder<Value, Properties> {
+export class MultiCheckboxBuilder<Output = Properties['checked']> extends GeneralOptionBuilder<Output, Properties> {
     constructor() {
         super({ type: 'multiCheckbox', properties: getInitialProperties() })
     }
@@ -56,7 +57,7 @@ export class MultiCheckboxBuilder<Value = Properties['checked']> extends General
 
     public nullable() {
         this.properties.nullable = true
-        return this as MultiCheckboxBuilder<Value | null>
+        return this as MultiCheckboxBuilder<Nullable<Output>>
     }
 
     public helpText(value: Properties['helpText']) {
@@ -71,7 +72,7 @@ export class MultiCheckboxBuilder<Value = Properties['checked']> extends General
 
     public required() {
         this.validations.push({ name: 'required' })
-        return this as MultiCheckboxBuilder<Exclude<Value, undefined>>
+        return this as MultiCheckboxBuilder<NonUndefinable<Output>>
     }
 
     public minSelections(min: number) {

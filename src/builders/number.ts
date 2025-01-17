@@ -1,17 +1,19 @@
+import { NonUndefinable, Nullable, Undefinable } from '@form-crafter/utils'
+
 import { CustomValidationRuleParams } from '_validations'
 
 import { GeneralOptionBuilder } from './general'
 
 type Properties = {
-    label: string | undefined
-    default: string | Date | number | undefined
-    min: string | Date | number | undefined
-    max: string | Date | number | undefined
-    disable: boolean | undefined
-    nullable: boolean | undefined
-    readonly: boolean | undefined
-    placeholder: string | undefined
-    helpText: string | undefined
+    label: Undefinable<string>
+    default: Undefinable<string | Date | number>
+    min: Undefinable<string | Date | number>
+    max: Undefinable<string | Date | number>
+    disable: Undefinable<boolean>
+    nullable: Undefinable<boolean>
+    readonly: Undefinable<boolean>
+    placeholder: Undefinable<string>
+    helpText: Undefinable<string>
 }
 
 const getInitialProperties: () => Properties = () => ({
@@ -26,7 +28,7 @@ const getInitialProperties: () => Properties = () => ({
     helpText: undefined,
 })
 
-export class NumberBuilder<Value = Properties['default']> extends GeneralOptionBuilder<Value, Properties> {
+export class NumberBuilder<Output = Properties['default']> extends GeneralOptionBuilder<Output, Properties> {
     constructor() {
         super({ type: 'number', properties: getInitialProperties() })
     }
@@ -58,7 +60,7 @@ export class NumberBuilder<Value = Properties['default']> extends GeneralOptionB
 
     public nullable() {
         this.properties.nullable = true
-        return this as NumberBuilder<Value | null>
+        return this as NumberBuilder<Nullable<Output>>
     }
 
     public readonly(value: Properties['readonly']) {
@@ -82,7 +84,7 @@ export class NumberBuilder<Value = Properties['default']> extends GeneralOptionB
     }
     public required() {
         this.validations.push({ name: 'required' })
-        return this as NumberBuilder<Exclude<Value, undefined>>
+        return this as NumberBuilder<NonUndefinable<Output>>
     }
 
     public minNumber(minNumber: NonNullable<Properties['min']>) {

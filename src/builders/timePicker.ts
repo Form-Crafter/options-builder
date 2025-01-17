@@ -1,4 +1,5 @@
 import { SelectionOption } from '@form-crafter/core'
+import { NonUndefinable, Nullable, Undefinable } from '@form-crafter/utils'
 
 import { getTimeByHoursOptions } from '_utils'
 import { CustomValidationRuleParams } from '_validations'
@@ -6,17 +7,17 @@ import { CustomValidationRuleParams } from '_validations'
 import { GeneralOptionBuilder } from './general'
 
 type Properties = {
-    label: string | undefined
-    default: string | undefined
-    min: string | undefined
-    max: string | undefined
-    options: SelectionOption[] | undefined
-    pattern: string | undefined
-    disable: boolean | undefined
-    nullable: boolean | undefined
-    readonly: boolean | undefined
-    placeholder: string | undefined
-    helpText: string | undefined
+    label: Undefinable<string>
+    default: Undefinable<string>
+    min: Undefinable<string>
+    max: Undefinable<string>
+    options: Undefinable<SelectionOption[]>
+    pattern: Undefinable<string>
+    disable: Undefinable<boolean>
+    nullable: Undefinable<boolean>
+    readonly: Undefinable<boolean>
+    placeholder: Undefinable<string>
+    helpText: Undefinable<string>
 }
 
 const getInitialProperties: () => Properties = () => ({
@@ -33,7 +34,7 @@ const getInitialProperties: () => Properties = () => ({
     helpText: undefined,
 })
 
-export class TimePickerBuilder<Value = Properties['default']> extends GeneralOptionBuilder<Value, Properties> {
+export class TimePickerBuilder<Output = Properties['default']> extends GeneralOptionBuilder<Output, Properties> {
     constructor() {
         super({ type: 'timePicker', properties: getInitialProperties() })
     }
@@ -75,7 +76,7 @@ export class TimePickerBuilder<Value = Properties['default']> extends GeneralOpt
 
     public nullable() {
         this.properties.nullable = true
-        return this as TimePickerBuilder<Value | null>
+        return this as TimePickerBuilder<Nullable<Output>>
     }
 
     public readonly(value: Properties['readonly']) {
@@ -99,7 +100,7 @@ export class TimePickerBuilder<Value = Properties['default']> extends GeneralOpt
     }
     public required() {
         this.validations.push({ name: 'required' })
-        return this as TimePickerBuilder<Exclude<Value, undefined>>
+        return this as TimePickerBuilder<NonUndefinable<Output>>
     }
 
     public minTime(minTime: NonNullable<Properties['min']>) {

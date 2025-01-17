@@ -1,20 +1,22 @@
+import { NonUndefinable, Nullable, Undefinable } from '@form-crafter/utils'
+
 import { CustomValidationRuleParams } from '_validations'
 
 import { GeneralOptionBuilder } from './general'
 
-type Value = string | Date | number | undefined
+type Value = Undefinable<string | Date | number>
 
 type Properties = {
-    label: string | undefined
-    default: { start?: Value; end?: Value } | undefined
+    label: Undefinable<string>
+    default: Undefinable<{ start?: Value; end?: Value }>
     min: Value
     max: Value
-    pattern: string | undefined
-    disable: boolean | undefined
-    nullable: boolean | undefined
-    readonly: boolean | undefined
-    placeholder: string | undefined
-    helpText: string | undefined
+    pattern: Undefinable<string>
+    disable: Undefinable<boolean>
+    nullable: Undefinable<boolean>
+    readonly: Undefinable<boolean>
+    placeholder: Undefinable<string>
+    helpText: Undefinable<string>
 }
 
 const getInitialProperties: () => Properties = () => ({
@@ -30,7 +32,7 @@ const getInitialProperties: () => Properties = () => ({
     helpText: undefined,
 })
 
-export class DateRangeBuilder<Value = Properties['default']> extends GeneralOptionBuilder<Value, Properties> {
+export class DateRangeBuilder<Output = Properties['default']> extends GeneralOptionBuilder<Output, Properties> {
     constructor() {
         super({ type: 'dateRange', properties: getInitialProperties() })
     }
@@ -67,7 +69,7 @@ export class DateRangeBuilder<Value = Properties['default']> extends GeneralOpti
 
     public nullable() {
         this.properties.nullable = true
-        return this as DateRangeBuilder<Value | null>
+        return this as DateRangeBuilder<Nullable<Output>>
     }
 
     public readonly(value: Properties['readonly']) {
@@ -92,7 +94,7 @@ export class DateRangeBuilder<Value = Properties['default']> extends GeneralOpti
 
     public required() {
         this.validations.push({ name: 'required' })
-        return this as DateRangeBuilder<Exclude<Value, undefined>>
+        return this as DateRangeBuilder<NonUndefinable<Output>>
     }
 
     public minRangeDate(start: Value, end: Value) {

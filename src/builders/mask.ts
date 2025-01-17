@@ -1,18 +1,19 @@
 import { MaskOptions } from '@form-crafter/core'
+import { NonUndefinable, Nullable, Undefinable } from '@form-crafter/utils'
 
 import { CustomValidationRuleParams } from '_validations'
 
 import { GeneralOptionBuilder } from './general'
 
 type Properties = {
-    label: string | undefined
-    default: string | undefined
+    label: Undefinable<string>
+    default: Undefinable<string>
     config: MaskOptions
-    disable: boolean | undefined
-    nullable: boolean | undefined
-    readonly: boolean | undefined
-    placeholder: string | undefined
-    helpText: string | undefined
+    disable: Undefinable<boolean>
+    nullable: Undefinable<boolean>
+    readonly: Undefinable<boolean>
+    placeholder: Undefinable<string>
+    helpText: Undefinable<string>
 }
 
 const getInitialProperties: () => Properties = () => ({
@@ -26,7 +27,7 @@ const getInitialProperties: () => Properties = () => ({
     helpText: undefined,
 })
 
-export class MaskBuilder<Value = Properties['default']> extends GeneralOptionBuilder<Value, Properties> {
+export class MaskBuilder<Output = Properties['default']> extends GeneralOptionBuilder<Output, Properties> {
     constructor() {
         super({ type: 'mask', properties: getInitialProperties() })
     }
@@ -53,7 +54,7 @@ export class MaskBuilder<Value = Properties['default']> extends GeneralOptionBui
 
     public nullable() {
         this.properties.nullable = true
-        return this as MaskBuilder<Value | null>
+        return this as MaskBuilder<Nullable<Output>>
     }
 
     public readonly(value: Properties['readonly']) {
@@ -78,7 +79,7 @@ export class MaskBuilder<Value = Properties['default']> extends GeneralOptionBui
 
     public required() {
         this.validations.push({ name: 'required' })
-        return this as MaskBuilder<Exclude<Value, undefined>>
+        return this as MaskBuilder<NonUndefinable<Output>>
     }
 
     public hideIf() {

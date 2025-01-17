@@ -1,18 +1,20 @@
+import { NonUndefinable, Nullable, Undefinable } from '@form-crafter/utils'
+
 import { CustomValidationRuleParams } from '_validations'
 
 import { GeneralOptionBuilder } from './general'
 
 type Properties = {
-    label: string | undefined
-    default: string | undefined
-    min: string | undefined
-    max: string | undefined
-    pattern: string | undefined
-    disable: boolean | undefined
-    nullable: boolean | undefined
-    readonly: boolean | undefined
-    placeholder: string | undefined
-    helpText: string | undefined
+    label: Undefinable<string>
+    default: Undefinable<string>
+    min: Undefinable<string>
+    max: Undefinable<string>
+    pattern: Undefinable<string>
+    disable: Undefinable<boolean>
+    nullable: Undefinable<boolean>
+    readonly: Undefinable<boolean>
+    placeholder: Undefinable<string>
+    helpText: Undefinable<string>
 }
 
 const getInitialProperties: () => Properties = () => ({
@@ -28,7 +30,7 @@ const getInitialProperties: () => Properties = () => ({
     helpText: undefined,
 })
 
-export class TimeBuilder<Value = Properties['default']> extends GeneralOptionBuilder<Value, Properties> {
+export class TimeBuilder<Output = Properties['default']> extends GeneralOptionBuilder<Output, Properties> {
     constructor() {
         super({ type: 'time', properties: getInitialProperties() })
     }
@@ -65,7 +67,7 @@ export class TimeBuilder<Value = Properties['default']> extends GeneralOptionBui
 
     public nullable() {
         this.properties.nullable = true
-        return this as TimeBuilder<Value | null>
+        return this as TimeBuilder<Nullable<Output>>
     }
 
     public readonly(value: Properties['readonly']) {
@@ -87,9 +89,10 @@ export class TimeBuilder<Value = Properties['default']> extends GeneralOptionBui
         this.validations.push(params)
         return this
     }
+
     public required() {
         this.validations.push({ name: 'required' })
-        return this as TimeBuilder<Exclude<Value, undefined>>
+        return this as TimeBuilder<NonUndefinable<Output>>
     }
 
     public minTime(minTime: NonNullable<Properties['min']>) {

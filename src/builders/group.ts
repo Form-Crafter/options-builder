@@ -1,18 +1,18 @@
-import { MakeKeysOptional, SomeObject, Undefinable, Unwrap } from '@form-crafter/utils'
+import { SomeObject, Undefinable, Unwrap } from '@form-crafter/utils'
 
 import { GroupStruct, GroupStructFromOutput, OutputFromGroupStruct } from '_types'
 
 import { GeneralOptionBuilder } from './general'
 
 type Properties = {
-    label: string | undefined
+    label: Undefinable<string>
 }
 
 const getInitialProperties = (): Properties => ({
     label: undefined,
 })
 
-export class GroupBuilder<Output extends Undefinable<SomeObject> = SomeObject> extends GeneralOptionBuilder<MakeKeysOptional<Output>, Properties> {
+export class GroupBuilder<Output extends Undefinable<SomeObject> = SomeObject> extends GeneralOptionBuilder<Output, Properties> {
     private struct: GroupStructFromOutput<NonNullable<Output>> = Object.create(null)
 
     constructor(struct: GroupStructFromOutput<Output>) {

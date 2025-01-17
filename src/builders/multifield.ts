@@ -7,7 +7,7 @@ import { GeneralOptionBuilder } from './general'
 
 type Properties<T extends Undefinable<SomeObject[]> = []> = {
     label: Undefinable<string>
-    default: Undefinable<OutputFromGroupStruct<ChildType<T>>>
+    default: Undefinable<T>
     template: Undefinable<SomeObject>
     disable: Undefinable<boolean>
     addButtonName: Undefinable<string>
@@ -32,7 +32,7 @@ export class MultifieldBuilder<Output extends Undefinable<SomeObject[]> = Undefi
         return this
     }
 
-    public default(value: ChildType<Output>) {
+    public default(value: Output) {
         this.properties.default = value
         return this
     }

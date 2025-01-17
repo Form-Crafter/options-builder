@@ -1,18 +1,19 @@
 import { SelectionOption } from '@form-crafter/core'
+import { NonUndefinable, Nullable, Undefinable } from '@form-crafter/utils'
 
 import { CustomValidationRuleParams } from '_validations'
 
 import { GeneralOptionBuilder } from './general'
 
 type Properties = {
-    label: string | undefined
-    default: SelectionOption['value'][] | undefined
+    label: Undefinable<string>
+    default: Undefinable<SelectionOption['value'][]>
     options: SelectionOption[]
-    disable: boolean | undefined
-    nullable: boolean | undefined
-    readonly: boolean | undefined
-    placeholder: string | undefined
-    helpText: string | undefined
+    disable: Undefinable<boolean>
+    nullable: Undefinable<boolean>
+    readonly: Undefinable<boolean>
+    placeholder: Undefinable<string>
+    helpText: Undefinable<string>
 }
 
 const getInitialProperties: () => Properties = () => ({
@@ -26,7 +27,7 @@ const getInitialProperties: () => Properties = () => ({
     helpText: undefined,
 })
 
-export class MultiSelectBuilder<Value = Properties['default']> extends GeneralOptionBuilder<Value, Properties> {
+export class MultiSelectBuilder<Output = Properties['default']> extends GeneralOptionBuilder<Output, Properties> {
     constructor() {
         super({ type: 'multiSelect', properties: getInitialProperties() })
     }
@@ -53,7 +54,7 @@ export class MultiSelectBuilder<Value = Properties['default']> extends GeneralOp
 
     public nullable() {
         this.properties.nullable = true
-        return this as MultiSelectBuilder<Value | null>
+        return this as MultiSelectBuilder<Nullable<Output>>
     }
 
     public readonly(value: Properties['readonly']) {
@@ -78,7 +79,7 @@ export class MultiSelectBuilder<Value = Properties['default']> extends GeneralOp
 
     public required() {
         this.validations.push({ name: 'required' })
-        return this as MultiSelectBuilder<Exclude<Value, undefined>>
+        return this as MultiSelectBuilder<NonUndefinable<Output>>
     }
 
     public minSelections(min: number) {
