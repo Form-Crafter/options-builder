@@ -24,6 +24,7 @@
   "devDependencies": {
     "@form-crafter/dev-configs": "^0.2.7",
     "@types/lodash.clonedeep": "^4.5.9",
+    "@types/yup": "^0.29.14",
     "vite": "^6.0.5",
     "vite-plugin-dts": "^4.5.0"
   },
@@ -32,7 +33,7 @@
   },
   "peerDependencies": {
     "@form-crafter/core": "^0.0.6",
-    "@form-crafter/utils": "^0.0.4"
+    "@form-crafter/utils": "^0.0.8"
   },
   "prettier": "@form-crafter/dev-configs/dist/prettier.json"
 }

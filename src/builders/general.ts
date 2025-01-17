@@ -1,14 +1,13 @@
 import { RelationRule } from '_relations'
+import { OptionBuilder, OptionFieldType } from '_types'
 import { ValidationRule } from '_validations'
-
-import { OptionFieldType } from '../types'
 
 type GeneralOptionBuilderParams<P extends object> = {
     type: OptionFieldType
     properties: P
 }
 
-export class GeneralOptionBuilder<Output = any, Props extends object = object> {
+export class GeneralOptionBuilder<Output = any, Props extends object = object> implements OptionBuilder<Output> {
     declare readonly __outputType: Output
 
     public readonly type: string
@@ -23,5 +22,3 @@ export class GeneralOptionBuilder<Output = any, Props extends object = object> {
         this.relations = []
     }
 }
-
-export type BuilderSchema = Record<string, GeneralOptionBuilder>

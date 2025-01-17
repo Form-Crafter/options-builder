@@ -1,14 +1,16 @@
+import { Maybe, NonUndefinable, Nullable, Undefinable } from '@form-crafter/utils'
+
 import { CustomValidationRuleParams } from '_validations'
 
 import { GeneralOptionBuilder } from './general'
 
 type Properties = {
-    label: string | undefined
-    checked: boolean | undefined
-    disable: boolean | undefined
-    nullable: boolean | undefined
-    readonly: boolean | undefined
-    helpText: string | undefined
+    label: Undefinable<string>
+    checked: Undefinable<boolean>
+    disable: Undefinable<boolean>
+    nullable: Undefinable<boolean>
+    readonly: Undefinable<boolean>
+    helpText: Undefinable<string>
 }
 
 const getInitialProperties = (): Properties => ({
@@ -20,7 +22,7 @@ const getInitialProperties = (): Properties => ({
     helpText: undefined,
 })
 
-export class CheckboxBuilder<Value = Properties['checked']> extends GeneralOptionBuilder<Value, Properties> {
+export class CheckboxBuilder<Output extends Maybe<Properties['checked']> = Properties['checked']> extends GeneralOptionBuilder<Output, Properties> {
     constructor() {
         super({ type: 'checkbox', properties: getInitialProperties() })
     }
@@ -47,7 +49,7 @@ export class CheckboxBuilder<Value = Properties['checked']> extends GeneralOptio
 
     public nullable() {
         this.properties.nullable = true
-        return this as CheckboxBuilder<Value | null>
+        return this as CheckboxBuilder<Nullable<Output>>
     }
 
     public helpText(value: Properties['helpText']) {
@@ -62,7 +64,7 @@ export class CheckboxBuilder<Value = Properties['checked']> extends GeneralOptio
 
     public required() {
         this.validations.push({ name: 'required' })
-        return this as CheckboxBuilder<Exclude<Value, undefined>>
+        return this as unknown as CheckboxBuilder<NonUndefinable<Output>>
     }
 
     public hideIf() {

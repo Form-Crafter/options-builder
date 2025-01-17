@@ -1,8 +1,8 @@
 import { checkbox } from '_builders/checkbox'
-import { container } from '_builders/container'
 import { date } from '_builders/date'
 import { datePicker } from '_builders/datePicker'
 import { dateRange } from '_builders/dateRange'
+import { group } from '_builders/group'
 import { input } from '_builders/input'
 import { mask } from '_builders/mask'
 import { miltiCheckbox } from '_builders/multiCheckbox'
@@ -35,7 +35,7 @@ export const builders = {
     dateRange,
     timePicker,
     mask,
-    container,
+    group,
     multifield,
     textarea,
 }
