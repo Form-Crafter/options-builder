@@ -1,5 +1,7 @@
+import { OptionsBuilder } from '@form-crafter/core'
+
 import { RelationRule } from '_relations'
-import { OptionBuilder, OptionFieldType } from '_types'
+import { OptionFieldType } from '_types'
 import { ValidationRule } from '_validations'
 
 type GeneralOptionBuilderParams<P extends object> = {
@@ -7,7 +9,7 @@ type GeneralOptionBuilderParams<P extends object> = {
     properties: P
 }
 
-export class GeneralOptionBuilder<Output = any, Props extends object = object> implements OptionBuilder<Output> {
+export class GeneralOptionBuilder<Output = any, Props extends object = object> implements OptionsBuilder<Output> {
     declare readonly __outputType: Output
 
     public readonly type: string

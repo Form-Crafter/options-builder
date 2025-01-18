@@ -32,8 +32,8 @@
     "lodash.clonedeep": "^4.5.0"
   },
   "peerDependencies": {
-    "@form-crafter/core": "^0.0.6",
-    "@form-crafter/utils": "^0.0.8"
+    "@form-crafter/core": "^0.1.1",
+    "@form-crafter/utils": "^0.0.10"
   },
   "prettier": "@form-crafter/dev-configs/dist/prettier.json"
 }
