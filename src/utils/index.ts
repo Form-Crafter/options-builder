@@ -1,1 +1,1 @@
-export { getTimeByHoursOptions } from './getTimeByHoursOptions'
+export { getTimeByHoursOptions } from './get-time-by-hours-options'
