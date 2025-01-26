@@ -7,7 +7,7 @@ import { GeneralOptionBuilder } from './general'
 
 type Properties = {
     label: Undefinable<string>
-    default: Undefinable<SelectionOption['value'][]>
+    default: Undefinable<SelectionOption['value']>
     options: SelectionOption[]
     disable: Undefinable<boolean>
     nullable: Undefinable<boolean>
