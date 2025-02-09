@@ -1,4 +1,4 @@
-import { NonUndefinable, Nullable, Undefinable } from '@form-crafter/utils'
+import { Maybe, NonUndefinable, Nullable, Undefinable } from '@form-crafter/utils'
 
 import { CustomValidationRuleParams } from '_validations'
 
@@ -6,9 +6,9 @@ import { GeneralOptionBuilder } from './general'
 
 type Properties = {
     label: Undefinable<string>
-    default: Undefinable<string | Date | number>
-    min: Undefinable<string | Date | number>
-    max: Undefinable<string | Date | number>
+    value: Undefinable<string | number>
+    min: Undefinable<string | number>
+    max: Undefinable<string | number>
     disable: Undefinable<boolean>
     nullable: Undefinable<boolean>
     readonly: Undefinable<boolean>
@@ -18,7 +18,7 @@ type Properties = {
 
 const getInitialProperties: () => Properties = () => ({
     label: undefined,
-    default: undefined,
+    value: undefined,
     min: undefined,
     max: undefined,
     disable: undefined,
@@ -28,7 +28,7 @@ const getInitialProperties: () => Properties = () => ({
     helpText: undefined,
 })
 
-export class NumberBuilder<Output = Properties['default']> extends GeneralOptionBuilder<Output, Properties> {
+export class NumberBuilder<Output extends Maybe<Properties['value']> = Properties['value']> extends GeneralOptionBuilder<Output, Properties> {
     constructor() {
         super({ type: 'number', properties: getInitialProperties() })
     }
@@ -38,8 +38,8 @@ export class NumberBuilder<Output = Properties['default']> extends GeneralOption
         return this
     }
 
-    public default(value: Properties['default']) {
-        this.properties.default = value
+    public value(value: Properties['value']) {
+        this.properties.value = value
         return this
     }
 
@@ -84,7 +84,7 @@ export class NumberBuilder<Output = Properties['default']> extends GeneralOption
     }
     public required() {
         this.validations.push({ name: 'required' })
-        return this as NumberBuilder<NonUndefinable<Output>>
+        return this as unknown as NumberBuilder<NonUndefinable<Output>>
     }
 
     public minNumber(minNumber: NonNullable<Properties['min']>) {

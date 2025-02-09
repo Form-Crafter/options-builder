@@ -6,7 +6,7 @@ import { GeneralOptionBuilder } from './general'
 
 type Properties = {
     label: Undefinable<string>
-    checked: Undefinable<boolean>
+    value: Undefinable<boolean>
     disable: Undefinable<boolean>
     nullable: Undefinable<boolean>
     readonly: Undefinable<boolean>
@@ -15,14 +15,14 @@ type Properties = {
 
 const getInitialProperties = (): Properties => ({
     label: undefined,
-    checked: undefined,
+    value: undefined,
     disable: undefined,
     nullable: undefined,
     readonly: undefined,
     helpText: undefined,
 })
 
-export class CheckboxBuilder<Output extends Maybe<Properties['checked']> = Properties['checked']> extends GeneralOptionBuilder<Output, Properties> {
+export class CheckboxBuilder<Output extends Maybe<Properties['value']> = Properties['value']> extends GeneralOptionBuilder<Output, Properties> {
     constructor() {
         super({ type: 'checkbox', properties: getInitialProperties() })
     }
@@ -32,8 +32,8 @@ export class CheckboxBuilder<Output extends Maybe<Properties['checked']> = Prope
         return this
     }
 
-    public checked(value: Properties['checked']) {
-        this.properties.checked = value
+    public value(value: Properties['value']) {
+        this.properties.value = value
         return this
     }
 

@@ -6,7 +6,7 @@ import { GeneralOptionBuilder } from './general'
 
 type Properties = {
     label: Undefinable<string>
-    default: Undefinable<string>
+    value: Undefinable<string>
     disable: Undefinable<boolean>
     nullable: Undefinable<boolean>
     readonly: Undefinable<boolean>
@@ -16,7 +16,7 @@ type Properties = {
 
 const getInitialProperties: () => Properties = () => ({
     label: undefined,
-    default: undefined,
+    value: undefined,
     disable: undefined,
     nullable: undefined,
     readonly: undefined,
@@ -24,7 +24,7 @@ const getInitialProperties: () => Properties = () => ({
     helpText: undefined,
 })
 
-export class InputBuilder<Output extends Maybe<Properties['default']> = Properties['default']> extends GeneralOptionBuilder<Output, Properties> {
+export class InputBuilder<Output extends Maybe<Properties['value']> = Properties['value']> extends GeneralOptionBuilder<Output, Properties> {
     constructor() {
         super({ type: 'input', properties: getInitialProperties() })
     }
@@ -34,8 +34,8 @@ export class InputBuilder<Output extends Maybe<Properties['default']> = Properti
         return this
     }
 
-    public default(value: Properties['default']) {
-        this.properties.default = value
+    public value(value: Properties['value']) {
+        this.properties.value = value
         return this
     }
 

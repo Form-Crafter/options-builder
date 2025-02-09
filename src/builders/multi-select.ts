@@ -1,5 +1,5 @@
 import { SelectionOption } from '@form-crafter/core'
-import { NonUndefinable, Nullable, Undefinable } from '@form-crafter/utils'
+import { Maybe, NonUndefinable, Nullable, Undefinable } from '@form-crafter/utils'
 
 import { CustomValidationRuleParams } from '_validations'
 
@@ -7,7 +7,7 @@ import { GeneralOptionBuilder } from './general'
 
 type Properties = {
     label: Undefinable<string>
-    default: Undefinable<SelectionOption['value'][]>
+    value: Undefinable<SelectionOption['value'][]>
     options: SelectionOption[]
     disable: Undefinable<boolean>
     nullable: Undefinable<boolean>
@@ -18,7 +18,7 @@ type Properties = {
 
 const getInitialProperties: () => Properties = () => ({
     label: undefined,
-    default: undefined,
+    value: undefined,
     options: [],
     disable: undefined,
     nullable: undefined,
@@ -27,7 +27,7 @@ const getInitialProperties: () => Properties = () => ({
     helpText: undefined,
 })
 
-export class MultiSelectBuilder<Output = Properties['default']> extends GeneralOptionBuilder<Output, Properties> {
+export class MultiSelectBuilder<Output extends Maybe<Properties['value']> = Properties['value']> extends GeneralOptionBuilder<Output, Properties> {
     constructor() {
         super({ type: 'multiSelect', properties: getInitialProperties() })
     }
@@ -37,8 +37,8 @@ export class MultiSelectBuilder<Output = Properties['default']> extends GeneralO
         return this
     }
 
-    public default(value: Properties['default']) {
-        this.properties.default = value
+    public value(value: Properties['value']) {
+        this.properties.value = value
         return this
     }
 
@@ -79,7 +79,7 @@ export class MultiSelectBuilder<Output = Properties['default']> extends GeneralO
 
     public required() {
         this.validations.push({ name: 'required' })
-        return this as MultiSelectBuilder<NonUndefinable<Output>>
+        return this as unknown as MultiSelectBuilder<NonUndefinable<Output>>
     }
 
     public minSelections(min: number) {

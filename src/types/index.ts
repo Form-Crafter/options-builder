@@ -1,5 +1,5 @@
 import { OptionsBuilder, OptionsBuilderOutput } from '@form-crafter/core'
-import { MakeKeysOptional, SomeObject, Undefinable } from '@form-crafter/utils'
+import { MakeKeysOptional, OptionalSerializableObject, SomeObject, Undefinable } from '@form-crafter/utils'
 
 export type OptionFieldType =
     | 'input'
@@ -20,12 +20,16 @@ export type OptionFieldType =
     | 'mask'
     | 'textarea'
 
-export type GroupStruct = SomeObject<OptionsBuilder<any>>
+export type GroupStruct = Record<string, OptionsBuilder>
 
+// TODO fucking incomprehensible names
 export type OutputFromGroupStruct<T extends GroupStruct> = MakeKeysOptional<{
     [K in keyof T]: OptionsBuilderOutput<T[K]>
 }>
 
-export type GroupStructFromOutput<T extends Undefinable<SomeObject>> = {
-    [K in keyof T]: OptionsBuilder<T[K]>
-}
+// TODO fucking incomprehensible names
+export type GroupStructFromOutput<T extends Undefinable<OptionalSerializableObject>> = T extends OptionalSerializableObject
+    ? {
+          [K in keyof T]: OptionsBuilder<T[K]>
+      }
+    : SomeObject

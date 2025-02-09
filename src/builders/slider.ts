@@ -1,4 +1,4 @@
-import { Undefinable } from '@form-crafter/utils'
+import { Maybe, Undefinable } from '@form-crafter/utils'
 
 import { CustomValidationRuleParams } from '_validations'
 
@@ -6,7 +6,7 @@ import { GeneralOptionBuilder } from './general'
 
 type Properties = {
     label: Undefinable<string>
-    default: number
+    value: number
     min: number
     max: number
     step: number
@@ -17,7 +17,7 @@ type Properties = {
 
 const getInitialProperties: () => Properties = () => ({
     label: undefined,
-    default: 5,
+    value: 5,
     min: 0,
     max: 10,
     step: 1,
@@ -27,7 +27,7 @@ const getInitialProperties: () => Properties = () => ({
     helpText: undefined,
 })
 
-export class SliderBuilder<Output = Properties['default']> extends GeneralOptionBuilder<Output, Properties> {
+export class SliderBuilder<Output extends Maybe<Properties['value']> = Properties['value']> extends GeneralOptionBuilder<Output, Properties> {
     constructor() {
         super({ type: 'slider', properties: getInitialProperties() })
     }
@@ -37,8 +37,8 @@ export class SliderBuilder<Output = Properties['default']> extends GeneralOption
         return this
     }
 
-    public default(value: Properties['default']) {
-        this.properties.default = value
+    public value(value: Properties['value']) {
+        this.properties.value = value
         return this
     }
 

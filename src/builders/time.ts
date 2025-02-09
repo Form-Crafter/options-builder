@@ -1,4 +1,4 @@
-import { NonUndefinable, Nullable, Undefinable } from '@form-crafter/utils'
+import { Maybe, NonUndefinable, Nullable, Undefinable } from '@form-crafter/utils'
 
 import { CustomValidationRuleParams } from '_validations'
 
@@ -6,7 +6,7 @@ import { GeneralOptionBuilder } from './general'
 
 type Properties = {
     label: Undefinable<string>
-    default: Undefinable<string>
+    value: Undefinable<string>
     min: Undefinable<string>
     max: Undefinable<string>
     pattern: Undefinable<string>
@@ -19,7 +19,7 @@ type Properties = {
 
 const getInitialProperties: () => Properties = () => ({
     label: undefined,
-    default: undefined,
+    value: undefined,
     min: undefined,
     max: undefined,
     pattern: undefined,
@@ -30,7 +30,7 @@ const getInitialProperties: () => Properties = () => ({
     helpText: undefined,
 })
 
-export class TimeBuilder<Output = Properties['default']> extends GeneralOptionBuilder<Output, Properties> {
+export class TimeBuilder<Output extends Maybe<Properties['value']> = Properties['value']> extends GeneralOptionBuilder<Output, Properties> {
     constructor() {
         super({ type: 'time', properties: getInitialProperties() })
     }
@@ -40,8 +40,8 @@ export class TimeBuilder<Output = Properties['default']> extends GeneralOptionBu
         return this
     }
 
-    public default(value: Properties['default']) {
-        this.properties.default = value
+    public value(value: Properties['value']) {
+        this.properties.value = value
         return this
     }
 
@@ -92,7 +92,7 @@ export class TimeBuilder<Output = Properties['default']> extends GeneralOptionBu
 
     public required() {
         this.validations.push({ name: 'required' })
-        return this as TimeBuilder<NonUndefinable<Output>>
+        return this as unknown as TimeBuilder<NonUndefinable<Output>>
     }
 
     public minTime(minTime: NonNullable<Properties['min']>) {

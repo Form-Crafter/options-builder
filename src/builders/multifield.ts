@@ -1,4 +1,4 @@
-import { ChildType, NonUndefinable, SomeObject, Undefinable, Unwrap } from '@form-crafter/utils'
+import { ChildType, NonUndefinable, OptionalSerializableObject, SomeObject, Undefinable, Unwrap } from '@form-crafter/utils'
 
 import { GroupStruct, GroupStructFromOutput, OutputFromGroupStruct } from '_types'
 import { CustomValidationRuleParams, LengthValidationRuleParams } from '_validations'
@@ -7,7 +7,7 @@ import { GeneralOptionBuilder } from './general'
 
 type Properties<T extends Undefinable<SomeObject[]> = []> = {
     label: Undefinable<string>
-    default: Undefinable<T>
+    value: Undefinable<T>
     template: Undefinable<SomeObject>
     disable: Undefinable<boolean>
     addButtonName: Undefinable<string>
@@ -15,13 +15,15 @@ type Properties<T extends Undefinable<SomeObject[]> = []> = {
 
 const getInitialProperties: <T extends Undefinable<SomeObject[]> = []>() => Properties<T> = () => ({
     label: undefined,
-    default: undefined,
+    value: undefined,
     template: undefined,
     disable: undefined,
     addButtonName: 'Add',
 })
 
-export class MultifieldBuilder<Output extends Undefinable<SomeObject[]> = Undefinable<SomeObject[]>> extends GeneralOptionBuilder<Output, Properties<Output>> {
+export class MultifieldBuilder<
+    Output extends Undefinable<OptionalSerializableObject[]> = Undefinable<OptionalSerializableObject[]>,
+> extends GeneralOptionBuilder<Output, Properties<Output>> {
     constructor(templateSchema: GroupStructFromOutput<ChildType<Output>>) {
         super({ type: 'multifield', properties: getInitialProperties<Output>() })
         this.properties.template = templateSchema
@@ -32,8 +34,8 @@ export class MultifieldBuilder<Output extends Undefinable<SomeObject[]> = Undefi
         return this
     }
 
-    public default(value: Output) {
-        this.properties.default = value
+    public value(value: Output) {
+        this.properties.value = value
         return this
     }
 

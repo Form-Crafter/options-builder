@@ -1,4 +1,5 @@
 import { OptionsBuilder } from '@form-crafter/core'
+import { OptionalSerializableValue, SomeObject } from '@form-crafter/utils'
 
 import { RelationRule } from '_relations'
 import { OptionFieldType } from '_types'
@@ -9,7 +10,7 @@ type GeneralOptionBuilderParams<P extends object> = {
     properties: P
 }
 
-export class GeneralOptionBuilder<Output = any, Props extends object = object> implements OptionsBuilder<Output> {
+export class GeneralOptionBuilder<Output extends OptionalSerializableValue, Props extends SomeObject = SomeObject> implements OptionsBuilder<Output> {
     declare readonly __outputType: Output
 
     public readonly type: string

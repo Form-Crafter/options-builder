@@ -1,5 +1,5 @@
 import { SelectionOption } from '@form-crafter/core'
-import { NonUndefinable, Nullable, Undefinable } from '@form-crafter/utils'
+import { Maybe, NonUndefinable, Nullable, Undefinable } from '@form-crafter/utils'
 
 import { CustomValidationRuleParams } from '_validations'
 
@@ -7,7 +7,7 @@ import { GeneralOptionBuilder } from './general'
 
 type Properties = {
     label: Undefinable<string>
-    default: Undefinable<SelectionOption['value']>
+    value: Undefinable<SelectionOption['value']>
     options: SelectionOption[]
     disable: Undefinable<boolean>
     nullable: Undefinable<boolean>
@@ -18,7 +18,7 @@ type Properties = {
 
 const getInitialProperties: () => Properties = () => ({
     label: undefined,
-    default: undefined,
+    value: undefined,
     options: [],
     disable: undefined,
     nullable: undefined,
@@ -27,7 +27,7 @@ const getInitialProperties: () => Properties = () => ({
     helpText: undefined,
 })
 
-export class SelectBuilder<Output = Properties['default']> extends GeneralOptionBuilder<Output, Properties> {
+export class SelectBuilder<Output extends Maybe<Properties['value']> = Properties['value']> extends GeneralOptionBuilder<Output, Properties> {
     constructor() {
         super({ type: 'select', properties: getInitialProperties() })
     }
@@ -37,8 +37,8 @@ export class SelectBuilder<Output = Properties['default']> extends GeneralOption
         return this
     }
 
-    public default(value: Properties['default']) {
-        this.properties.default = value
+    public value(value: Properties['value']) {
+        this.properties.value = value
         return this
     }
 
@@ -79,7 +79,7 @@ export class SelectBuilder<Output = Properties['default']> extends GeneralOption
 
     public required() {
         this.validations.push({ name: 'required' })
-        return this as SelectBuilder<NonUndefinable<Output>>
+        return this as unknown as SelectBuilder<NonUndefinable<Output>>
     }
 
     public hideIf() {

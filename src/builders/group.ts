@@ -1,4 +1,4 @@
-import { SomeObject, Undefinable, Unwrap } from '@form-crafter/utils'
+import { OptionalSerializableObject, Undefinable, Unwrap } from '@form-crafter/utils'
 
 import { GroupStruct, GroupStructFromOutput, OutputFromGroupStruct } from '_types'
 
@@ -12,7 +12,10 @@ const getInitialProperties = (): Properties => ({
     label: undefined,
 })
 
-export class GroupBuilder<Output extends Undefinable<SomeObject> = SomeObject> extends GeneralOptionBuilder<Output, Properties> {
+export class GroupBuilder<Output extends Undefinable<OptionalSerializableObject> = Undefinable<OptionalSerializableObject>> extends GeneralOptionBuilder<
+    Output,
+    Properties
+> {
     private struct: GroupStructFromOutput<NonNullable<Output>> = Object.create(null)
 
     constructor(struct: GroupStructFromOutput<Output>) {
@@ -30,7 +33,7 @@ export class GroupBuilder<Output extends Undefinable<SomeObject> = SomeObject> e
         return this
     }
 
-    private setStruct<T extends Undefinable<Output>>(struct: GroupStructFromOutput<T>) {
+    private setStruct<T extends Output>(struct: GroupStructFromOutput<T>) {
         this.struct = struct as GroupStructFromOutput<NonNullable<Output>>
     }
 

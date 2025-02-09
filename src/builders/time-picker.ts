@@ -1,5 +1,5 @@
 import { SelectionOption } from '@form-crafter/core'
-import { NonUndefinable, Nullable, Undefinable } from '@form-crafter/utils'
+import { Maybe, NonUndefinable, Nullable, Undefinable } from '@form-crafter/utils'
 
 import { getTimeByHoursOptions } from '_utils'
 import { CustomValidationRuleParams } from '_validations'
@@ -8,7 +8,7 @@ import { GeneralOptionBuilder } from './general'
 
 type Properties = {
     label: Undefinable<string>
-    default: Undefinable<string>
+    value: Undefinable<string>
     min: Undefinable<string>
     max: Undefinable<string>
     options: Undefinable<SelectionOption[]>
@@ -22,7 +22,7 @@ type Properties = {
 
 const getInitialProperties: () => Properties = () => ({
     label: undefined,
-    default: undefined,
+    value: undefined,
     min: undefined,
     max: undefined,
     options: getTimeByHoursOptions(),
@@ -34,7 +34,7 @@ const getInitialProperties: () => Properties = () => ({
     helpText: undefined,
 })
 
-export class TimePickerBuilder<Output = Properties['default']> extends GeneralOptionBuilder<Output, Properties> {
+export class TimePickerBuilder<Output extends Maybe<Properties['value']> = Properties['value']> extends GeneralOptionBuilder<Output, Properties> {
     constructor() {
         super({ type: 'timePicker', properties: getInitialProperties() })
     }
@@ -44,8 +44,8 @@ export class TimePickerBuilder<Output = Properties['default']> extends GeneralOp
         return this
     }
 
-    public default(value: Properties['default']) {
-        this.properties.default = value
+    public value(value: Properties['value']) {
+        this.properties.value = value
         return this
     }
 
@@ -100,7 +100,7 @@ export class TimePickerBuilder<Output = Properties['default']> extends GeneralOp
     }
     public required() {
         this.validations.push({ name: 'required' })
-        return this as TimePickerBuilder<NonUndefinable<Output>>
+        return this as unknown as TimePickerBuilder<NonUndefinable<Output>>
     }
 
     public minTime(minTime: NonNullable<Properties['min']>) {

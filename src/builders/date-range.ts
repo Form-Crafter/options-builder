@@ -1,14 +1,14 @@
-import { NonUndefinable, Nullable, Undefinable } from '@form-crafter/utils'
+import { Maybe, NonUndefinable, Nullable, Undefinable } from '@form-crafter/utils'
 
 import { CustomValidationRuleParams } from '_validations'
 
 import { GeneralOptionBuilder } from './general'
 
-type Value = Undefinable<string | Date | number>
+type Value = Undefinable<string | number>
 
 type Properties = {
     label: Undefinable<string>
-    default: Undefinable<{ start?: Value; end?: Value }>
+    value: Undefinable<{ start?: Value; end?: Value }>
     min: Value
     max: Value
     pattern: Undefinable<string>
@@ -21,7 +21,7 @@ type Properties = {
 
 const getInitialProperties: () => Properties = () => ({
     label: undefined,
-    default: undefined,
+    value: undefined,
     min: undefined,
     max: undefined,
     pattern: undefined,
@@ -32,7 +32,7 @@ const getInitialProperties: () => Properties = () => ({
     helpText: undefined,
 })
 
-export class DateRangeBuilder<Output = Properties['default']> extends GeneralOptionBuilder<Output, Properties> {
+export class DateRangeBuilder<Output extends Maybe<Properties['value']> = Properties['value']> extends GeneralOptionBuilder<Output, Properties> {
     constructor() {
         super({ type: 'dateRange', properties: getInitialProperties() })
     }
@@ -42,8 +42,8 @@ export class DateRangeBuilder<Output = Properties['default']> extends GeneralOpt
         return this
     }
 
-    public default(value: Properties['default']) {
-        this.properties.default = value
+    public value(value: Properties['value']) {
+        this.properties.value = value
         return this
     }
 
@@ -94,7 +94,7 @@ export class DateRangeBuilder<Output = Properties['default']> extends GeneralOpt
 
     public required() {
         this.validations.push({ name: 'required' })
-        return this as DateRangeBuilder<NonUndefinable<Output>>
+        return this as unknown as DateRangeBuilder<NonUndefinable<Output>>
     }
 
     public minRangeDate(start: Value, end: Value) {

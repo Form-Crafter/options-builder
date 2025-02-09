@@ -1,4 +1,4 @@
-import { NonUndefinable, Nullable, Undefinable } from '@form-crafter/utils'
+import { Maybe, NonUndefinable, Nullable, Undefinable } from '@form-crafter/utils'
 
 import { CustomValidationRuleParams, LengthValidationRuleParams } from '_validations'
 
@@ -6,7 +6,7 @@ import { GeneralOptionBuilder } from './general'
 
 type Properties = {
     label: Undefinable<string>
-    default: Undefinable<string>
+    value: Undefinable<string>
     disable: Undefinable<boolean>
     nullable: Undefinable<boolean>
     readonly: Undefinable<boolean>
@@ -16,7 +16,7 @@ type Properties = {
 
 const getInitialProperties: () => Properties = () => ({
     label: undefined,
-    default: undefined,
+    value: undefined,
     disable: undefined,
     nullable: undefined,
     readonly: undefined,
@@ -24,7 +24,7 @@ const getInitialProperties: () => Properties = () => ({
     helpText: undefined,
 })
 
-export class TextareaBuilder<Output = Properties['default']> extends GeneralOptionBuilder<Output, Properties> {
+export class TextareaBuilder<Output extends Maybe<Properties['value']> = Properties['value']> extends GeneralOptionBuilder<Output, Properties> {
     constructor() {
         super({ type: 'textarea', properties: getInitialProperties() })
     }
@@ -34,8 +34,8 @@ export class TextareaBuilder<Output = Properties['default']> extends GeneralOpti
         return this
     }
 
-    public default(value: Properties['default']) {
-        this.properties.default = value
+    public value(value: Properties['value']) {
+        this.properties.value = value
         return this
     }
 
@@ -71,7 +71,7 @@ export class TextareaBuilder<Output = Properties['default']> extends GeneralOpti
 
     public required() {
         this.validations.push({ name: 'required' })
-        return this as TextareaBuilder<NonUndefinable<Output>>
+        return this as unknown as TextareaBuilder<NonUndefinable<Output>>
     }
 
     public length(params: LengthValidationRuleParams) {
