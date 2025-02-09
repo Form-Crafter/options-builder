@@ -19,7 +19,9 @@
     "lint": "run-s lint:*",
     "lint:eslint": "eslint -c ./eslint.config.js .",
     "lint:tsc": "tsc --p ./tsconfig.json --noEmit true --emitDeclarationOnly false",
-    "fix": "npm run lint:eslint -- --fix && npm run lint:tsc"
+    "fix": "npm run lint:eslint -- --fix && npm run lint:tsc",
+    "pub:m": "npm run build && npm version minor && npm publish",
+    "pub:p": "npm run build && npm version patch && npm publish"
   },
   "devDependencies": {
     "@form-crafter/dev-configs": "^0.3.1",
